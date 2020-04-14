@@ -32,6 +32,8 @@ This function can help analyse raw iamges of LSCI.
         3. you can define some paremeters of the sliding window
         4. all results are saved in the folder directory called LSCI_initial of your matlab file
 
+![](https://https://github.com/kxhaaa/Epilepsy-analysis/blob/master/demo/LSCI_initial.png)
+
 * Images_mean
 
 This function can help get the average of every pixels in a group of images.
