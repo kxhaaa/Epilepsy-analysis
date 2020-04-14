@@ -10,9 +10,9 @@ Matlab r2019a or higher
 
 you could change the file format by your own.
 
-all data is `16 bit` depth
-defaulted raw images format is `.tiff`
-defaulted analysed images format is `.tif`
+all data is `16 bit` depth\
+defaulted raw images format is `.tiff`\
+defaulted analysed images format is `.tif`\
 
 ## Usage
 
@@ -21,6 +21,8 @@ defaulted analysed images format is `.tif`
 including 3 function: `LSCI_initial` `Images_mean` `Analyse Two Images`
 
 * LSCI_initial
+
+This function can help analyse raw iamges of LSCI.
         
         1. click the botton and choose a raw images of LSCI (all images in the folder would be uploaded)
         2. choose whether you need spatial or temporal speckle contrast images
