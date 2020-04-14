@@ -47,7 +47,9 @@ This function can help get change of two LSCI images at different time.
 
         1. click the button, choose your basic image, then choose the analysed image
         2. then wait for image registration and input the index of pixel change you want to analyse
-        
+    
+![](https://github.com/kxhaaa/Epilepsy-analysis/blob/master/demo/result%20of%20analyse%20two%20images.png)
+
 ### EEG
 including 2 function: `Power Spectrum` `Epileptic EEG Analysis`
 
@@ -58,7 +60,9 @@ This function can help get power spectrum of eeg data.
         1. click the button, and choose your data
         2. click the start and end point of baseline data with the cursor in the chart
         3. set the sampling frequency and get 4 different types of power spectrum result
-        
+ 
+![](https://github.com/kxhaaa/Epilepsy-analysis/blob/master/demo/power%20spectrum.png) 
+ 
 * Epileptic EEG Analysis
 
 This function can help count the interictal spikes and fast ripples semiautomaticly.
