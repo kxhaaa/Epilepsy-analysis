@@ -20,7 +20,7 @@ defaulted analysed images format is `.tif`
 
 including 3 function: `LSCI_initial` `Images_mean` `Analyse Two Images`
 
-#### * LSCI_initial
+* LSCI_initial
 
     1. click the botton and choose a raw images of LSCI (all images in the folder would be uploaded)
     2. choose whether you need spatial or temporal speckle contrast images
