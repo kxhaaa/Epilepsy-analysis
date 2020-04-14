@@ -12,7 +12,7 @@ you could change the file format by your own.
 
 all data is `16 bit` depth\
 defaulted raw images format is `.tiff`\
-defaulted analysed images format is `.tif`\
+defaulted analysed images format is `.tif`
 
 ## Usage
 
@@ -38,6 +38,10 @@ This function can help get the average of every pixels in a group of images.
 
 * Analyse Two Images
 
+This function can help get change of two LSCI images at different time.
+
+        1. click the botton, choose your basic image, then choose the analysed image
+        2. 
 
 
 Institute: Huazhong University of Science and Technology
