@@ -17,6 +17,8 @@ EEG data format is `.continuous`
 
 ## Usage
 
+all functions are packaged in the GUI file called `program_export.m`
+
 ### LSCI 
 
 including 3 function: `LSCI_initial` `Images_mean` `Analyse Two Images`
