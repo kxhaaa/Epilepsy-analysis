@@ -22,16 +22,16 @@ including 3 function: `LSCI_initial` `Images_mean` `Analyse Two Images`
 
 #### LSCI_initial
 
-  1. click the botton and choose a raw images of LSCI (all images in the folder would be uploaded)
-  2. choose whether you need spatial or temporal speckle contrast images
-  3. you can define some paremeters of the sliding window
-  4. all results are saved in the folder directory called `LSCI_initial` of your matlab file
+    1. click the botton and choose a raw images of LSCI (all images in the folder would be uploaded)
+    2. choose whether you need spatial or temporal speckle contrast images
+    3. you can define some paremeters of the sliding window
+    4. all results are saved in the folder directory called `LSCI_initial` of your matlab file
 
 #### Images_mean
 This function can help get the average of every pixels in a group of images.
 
-  1. click the botton and choose your images (all images in the folder would be uploaded)
-  2. the result is saved in your program folder called 'mean.tif'
+    1. click the botton and choose your images (all images in the folder would be uploaded)
+    2. the result is saved in your program folder called 'mean.tif'
 
 #### Analyse Two Images
 
