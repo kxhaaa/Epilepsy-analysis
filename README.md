@@ -25,7 +25,7 @@ including 3 function: `LSCI_initial` `Images_mean` `Analyse Two Images`
 
 * LSCI_initial
 
-This function can help analyse raw iamges of LSCI.
+This function can help analyse raw images of LSCI.
         
         1. click the button and choose a raw images of LSCI (all images in the folder would be uploaded)
         2. choose whether you need spatial or temporal speckle contrast images
