@@ -103,9 +103,11 @@ colormap jet
 fprintf('Registration has been finished.\n');
 
 fprintf('Calculation starts, please wait for a second.\n');
+movingRegistered=sqrt(1./double(movingRegistered));
+v1=sqrt(1./double(v1));
 sub1=double(movingRegistered)-double(v1);
 % imshow(uint16(k));
-result=sub1./double(v1);
+result=-sub1./double(v1);
 save ('result.mat', 'result');
 pixel=input('Please input the range of index:\n');
 figure
@@ -186,7 +188,7 @@ plot(exm_data);
 z = fmdemod(exm_data,1/600,1000,100);
 figure
 subplot(2,1,1);
-plot(z); title('50Hz Signal demodulation');
+plot(z); title('raw signal');
 
 [C,L] = wavedec(z,6,'coif1'); 
 [sigden,coefs] = cmddenoise(z,'coif1',6);
@@ -396,6 +398,10 @@ function pushbutton8_Callback(hObject, eventdata, handles)
 fprintf('Please input the raw images.\n');
 [file,path]=uigetfile(['*.*']);%select file
 d = dir([path,'*.tiff']);
+len=length(d);
+if len<1
+    d= dir([path,'*.tif']);
+end
 mkdir LSCI_initial
 outfile='LSCI_initial/';%save path
 
@@ -443,7 +449,7 @@ if str==0
             end
         end
         v2=1./k2./k2;
-        imwrite(uint16(v2.*100),[outfile,num2str(q,'%d'),'.tif']);
+        imwrite(uint16(v2.*50),[outfile,num2str(q,'%d'),'.tif']);
     end
     toc
 end
@@ -481,8 +487,10 @@ if str==1
     tic;
     for q=1:gap:F-len_win
         num=num+1;
+        t=1;
         for i=q:q+len_win
-            I2(:,:,i)=double(I1(:,:,i));
+            I2(:,:,t)=double(I1(:,:,i));
+            t=t+1;
         end
         for m=1:a
             for n=1:b
@@ -491,7 +499,7 @@ if str==1
         end
         
         temp = 1./k1./k1;
-        imwrite(uint16(temp.*100),[outfile,num2str(num,'%d'),'.tif']);
+        imwrite(uint16(temp.*50),[outfile,num2str(num,'%d'),'.tif']);
     end
     toc;
 end
