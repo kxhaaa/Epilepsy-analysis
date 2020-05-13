@@ -92,7 +92,7 @@ Author: Xianghan Kong
 
 Teacher: Shangbin Chen & Yicheng Xie
 
-Thanks Peng Xu who do the biological experiment and provide me all the data!
+Thanks Peng Xu who does the biological experiment and provide me all the data!
 
 
 
