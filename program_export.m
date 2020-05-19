@@ -99,13 +99,28 @@ fprintf('Registration starts, please wait for a second.\n');
    optimizer.MaximumIterations = 3000;
 movingRegistered = imregister(v2, v1, 'affine', optimizer, metric);
 imshow(movingRegistered);
-colormap jet
 fprintf('Registration has been finished.\n');
-
-fprintf('Calculation starts, please wait for a second.\n');
 movingRegistered=sqrt(1./double(movingRegistered));
 v1=sqrt(1./double(v1));
-sub1=double(movingRegistered)-double(v1);
+
+fprintf('Please select an area to calibrate the image.');
+[y,x] = ginput(2);
+x=round(x);
+y=round(y);
+aver1=0;
+if x(1)<x(2)&&y(1)<y(2)
+    v11=v1(x(1):x(2),y(1):y(2));
+    aver1=mean(v11(:));
+    v22=movingRegistered(x(1):x(2),y(1):y(2));
+    aver2=mean(v22(:));
+end
+if aver1==0
+    fprintf('Please select the point from upper left to lower right.');
+end
+index_modify=double(aver1/aver2);
+
+fprintf('Calculation starts, please wait for a second.\n');
+sub1=double(index_modify.*movingRegistered)-double(v1);
 % imshow(uint16(k));
 result=-sub1./double(v1);
 save ('result.mat', 'result');
