@@ -103,26 +103,26 @@ fprintf('Registration has been finished.\n');
 movingRegistered=sqrt(1./double(movingRegistered));
 v1=sqrt(1./double(v1));
 
-fprintf('Please select an area to calibrate the image.');
-[y,x] = ginput(2);
-x=round(x);
-y=round(y);
-aver1=0;
-if x(1)<x(2)&&y(1)<y(2)
-    v11=v1(x(1):x(2),y(1):y(2));
-    aver1=mean(v11(:));
-    v22=movingRegistered(x(1):x(2),y(1):y(2));
-    aver2=mean(v22(:));
-end
-if aver1==0
-    fprintf('Please select the point from upper left to lower right.');
-end
-index_modify=double(aver1/aver2);
+% fprintf('Please select an area to calibrate the image.');
+% [y,x] = ginput(2);
+% x=round(x);
+% y=round(y);
+% aver1=0;
+% if x(1)<x(2)&&y(1)<y(2)
+%     v11=v1(x(1):x(2),y(1):y(2));
+%     aver1=mean(v11(:));
+%     v22=movingRegistered(x(1):x(2),y(1):y(2));
+%     aver2=mean(v22(:));
+% end
+% if aver1==0
+%     fprintf('Please select the point from upper left to lower right.');
+% end
+% index_modify=double(aver1/aver2);
 
 fprintf('Calculation starts, please wait for a second.\n');
-sub1=double(index_modify.*movingRegistered)-double(v1);
+sub1=double(movingRegistered)-double(v1);
 % imshow(uint16(k));
-result=-sub1./double(v1);
+result=sub1./double(v1);
 save ('result.mat', 'result');
 pixel=input('Please input the range of index:\n');
 figure
@@ -140,19 +140,51 @@ function pushbutton5_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 fprintf('Please select a EEG data.\n');
 [file,rep]=uigetfile(['*.*']);%select file 
-[data, timestamps, info] = load_open_ephys_data([rep,file]);
-figure
-plot(data);
-title('raw data');
+    prompt = {'Please enter file type.("0" for .continuous ; "1" for .edf)'};
+    dlgtitle = 'Input';
+    dims = [1 35];
+    answer = inputdlg(prompt,dlgtitle,dims);
+    type=str2num(answer{1});
 
-disp('Please select a start point and an end point in the chart.(the suggested length is about 10w.)');
-[x,y] = ginput(2);
-c=floor(x(1));
-d=floor(x(2));
-data1=data(c:d);
-timestamps1=timestamps(c:d);
 
-fs=input('Please input the sampling frequency.\n(Notice fs>2*fN. Example:If the fN is 10kHz, fs is suggested to be 30kHz.)\n');
+if type==0
+    [data, timestamps, info] = load_open_ephys_data([rep,file]);
+    prompt = {'Please enter start point:','Please enter end point:'};
+    dlgtitle = 'Input';
+    dims = [1 35];
+    definput = {'1','100000'};
+    answer = inputdlg(prompt,dlgtitle,dims,definput);
+    c=str2num(answer{1});
+    d=str2num(answer{2});
+    
+    data1=data(c:d);
+    timestamps1=timestamps(c:d);
+    plot(data1);
+    z = fmdemod(data1,1/600,1000,100);
+    figure
+    plot(z); title('raw signal');
+        
+    fs=input('Please input the sampling frequency.\n(Notice fs>2*fN. Example:If the fN is 10kHz, fs is suggested to be 30kHz.)\n');
+
+end
+
+if type==1
+    [data,header] = lab_read_edf([rep,file]);
+    k=length(header.events.POS);
+    
+    data_mark=data(header.events.POS(2):header.events.POS(k));
+    len=length(data_mark);
+    
+    points=[1:header.numtimeframes];
+    timestamps=double(points)./header.samplingrate;
+    c=header.events.POS(2);d=header.events.POS(k);
+    timestamps1=timestamps(c:d);
+    data1=data_mark;
+    figure
+    plot(data1); title('raw signal');
+    fs=3*header.samplingrate;
+end
+
 y=fft(data1);
 figure
 n = length(data1);          % number of samples
@@ -167,17 +199,17 @@ xlim([0,200]);
 figure
 pspectrum(data1,timestamps1,'persistence')
 title('persistence spectrum (short-time fourier)');
-xlim([0,0.5]);
+% xlim([0,0.5]);
 
 figure
 pspectrum(data1,timestamps1,'power')
 title('power spectrum (short-time fourier)');
-xlim([0,0.5]);
+% xlim([0,0.5]);
 
 figure
 pspectrum(data1,timestamps1,'spectrogram','Reassign',true)
 title('instantaneous frequency (short-time fourier)');
-ylim([0 0.5]);
+% ylim([0 0.5]);
 fprintf('This program has been finished.\nHave a nice day!\n');
 
 
@@ -188,28 +220,54 @@ function pushbutton6_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 fprintf('Please select a EEG data.\n');
 [file,rep]=uigetfile(['*.*']);%select file 
-[data, timestamps, info] = load_open_ephys_data([rep,file]);
+    prompt = {'Please enter file type.("0" for .continuous ; "1" for .edf)'};
+    dlgtitle = 'Input';
+    dims = [1 35];
+    answer = inputdlg(prompt,dlgtitle,dims);
+    type=str2num(answer{1});
 
-prompt = {'Please enter start point:','Please enter end point:'};
-dlgtitle = 'Input';
-dims = [1 35];
-definput = {'1','100000'};
-answer = inputdlg(prompt,dlgtitle,dims,definput);
-a=str2num(answer{1});
-b=str2num(answer{2});
 
-exm_data=data(a:b);
-plot(exm_data);
-z = fmdemod(exm_data,1/600,1000,100);
-figure
-subplot(2,1,1);
-plot(z); title('raw signal');
+if type==0
+    [data, timestamps, info] = load_open_ephys_data([rep,file]);
+    prompt = {'Please enter start point:','Please enter end point:'};
+    dlgtitle = 'Input';
+    dims = [1 35];
+    definput = {'1','100000'};
+    answer = inputdlg(prompt,dlgtitle,dims,definput);
+    a=str2num(answer{1});
+    b=str2num(answer{2});
+    
+    exm_data=data(a:b);
+    plot(exm_data);
+    z = fmdemod(exm_data,1/600,1000,100);
+    figure
+    subplot(2,1,1);
+    plot(z); title('raw signal');
+end
 
-[C,L] = wavedec(z,6,'coif1'); 
-[sigden,coefs] = cmddenoise(z,'coif1',6);
-detl1 = wrcoef('d',coefs,L,'coif1',6); %1-D detail coefficients
+if type==1
+    [data,header] = lab_read_edf([rep,file]);
+    k=length(header.events.POS);
+    
+    data_mark=data(header.events.POS(2):header.events.POS(k));
+    len=length(data_mark);
+    
+    points=[1:header.numtimeframes];
+    timestamps=double(points)./header.samplingrate;
+    a=header.events.POS(2);b=header.events.POS(k);
+    z=data_mark;
+    figure
+    subplot(2,1,1);
+    plot(z); title('raw signal');
+    
+end
+
+
+[C,L] = wavedec(z,2,'coif1'); 
+[sigden,coefs] = cmddenoise(z,'coif1',2);
+detl1 = wrcoef('d',coefs,L,'coif1',2); %1-D detail coefficients
 subplot(2,1,2);
-plot(detl1); title('Thresholded Wavelet Coefficients - Level 6');
+plot(detl1); title('Thresholded Wavelet Coefficients - Level 2');
 
 prompt1 = {'Please set the type of signal. 0 for interictal spike, 1 for fast ripple. '};
 dlgtitle = 'Input';
