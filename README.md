@@ -13,7 +13,7 @@ you could change the file format by your own.
 all LSCI images are `16 bit` depth\
 defaulted LSCI raw images format is `.tiff`  or `.tif`\
 defaulted LSCI analysed images format is `.tif`\
-EEG data format is `.continuous`
+EEG data format is `.continuous` or `.edf`
 
 ## Usage
 
